@@ -152,18 +152,21 @@
 </body>
 <script>
     let datetxt = "12 - 01 - 2002";
-    let datatxtletter = "Sinh nhật vui vẻ bên bạn bè và gia đình, sớm chinh phục những mục tiêu tiếp theo trong công việc nháaa!";
-    let datatxtletter2 = "Kí tên: Kiên Nguyễn";         // Thêm dòng ký tên
+    let datatxtletterNew = "Chúc bạn Ly tuổi mới học giỏi, mau ăn, chóng lớn nha :v Just kidding"; // Dòng chúc mới
+    let datatxtletter = "Đùa chớ sinh nhật vui vẻ bên bạn bè và gia đình, sớm chinh phục những mục tiêu tiếp theo trong công việc nháaa!";
+    let datatxtletter2 = "Kí tên: Kiên Nguyễn"; // Thêm dòng ký tên
     let titleLetter = "Gửi bác sĩ Khánh Ly";
 
     let charArrDate = datetxt.split('');
+    let charArrDateLetterNew = datatxtletterNew.split(''); // Mảng ký tự của dòng chúc mới
     let charArrDateLetter = datatxtletter.split('');
-    let charArrDateLetter2 = datatxtletter2.split('');  // Mảng ký tự của dòng ký tên
+    let charArrDateLetter2 = datatxtletter2.split(''); // Mảng ký tự của dòng ký tên
     let charArrTitle = titleLetter.split('');
 
     let currentIndex = 0;
+    let currentIndexLetterNew = 0; // Biến đếm cho dòng chúc mới
     let currentIndexLetter = 0;
-    let currentIndexLetter2 = 0;                        // Biến đếm cho dòng ký tên
+    let currentIndexLetter2 = 0; // Biến đếm cho dòng ký tên
     let currentIndexTitle = 0;
 
     let date__of__birth = document.querySelector(".date__of__birth span");
@@ -171,9 +174,9 @@
     let text__letter2 = document.querySelector(".text__letter span");
 
     // Gõ ngày sinh (chờ 12 giây rồi gõ)
-    setTimeout(function(){
-        timeDatetxt = setInterval(function(){
-            if(currentIndex < charArrDate.length){
+    setTimeout(function () {
+        timeDatetxt = setInterval(function () {
+            if (currentIndex < charArrDate.length) {
                 date__of__birth.textContent += charArrDate[currentIndex];
                 currentIndex++;
             }
@@ -184,69 +187,78 @@
                 document.querySelector(".date__of__birth").appendChild(i.cloneNode(true))
                 clearInterval(timeDatetxt)
             }
-        },100)
-    },12000)
+        }, 100)
+    }, 12000)
 
-    var intervalContent, intervalContent2, intervalTitle;
+    var intervalContentNew, intervalContent, intervalContent2, intervalTitle;
 
-    $("#btn__letter").on("click", function(){
+    $("#btn__letter").on("click", function () {
         $(".box__letter").slideDown()
-        setTimeout(function(){
+        setTimeout(function () {
             $(".letter__border").slideDown();
-        },1000)
-        setTimeout(function(){
-            intervalTitle = setInterval(function(){
-                if(currentIndexTitle < charArrTitle.length){
+        }, 1000)
+        setTimeout(function () {
+            intervalTitle = setInterval(function () {
+                if (currentIndexTitle < charArrTitle.length) {
                     document.querySelector(".title__letter").textContent += charArrTitle[currentIndexTitle];
                     let i = document.createElement("i");
-                    // i.className = "fa-solid fa-heart"
                     document.querySelector(".title__letter").appendChild(i)
                     currentIndexTitle++;
                 }
-                else{
+                else {
                     clearInterval(intervalTitle)
                 }
-            },100)
-        },2000)
-        setTimeout(function(){
+            }, 100)
+        }, 2000)
+        setTimeout(function () {
             document.querySelector("#heart__letter").classList.add("animationOp");
             document.querySelector(".love__img").classList.add("animationOp");
             document.querySelector("#mewmew").classList.add("animationOp");
-        },2800)
-        setTimeout(function(){
-            document.querySelectorAll(".heart").forEach((item)=>{
+        }, 2800)
+        setTimeout(function () {
+            document.querySelectorAll(".heart").forEach((item) => {
                 item.classList.add("animation")
             })
-        },3500)
-        setTimeout(function(){
-            // Gõ dòng thứ nhất: "Sinh nhật vui vẻ..."
-            intervalContent = setInterval(function(){
-                if(currentIndexLetter < charArrDateLetter.length){
-                    text__letter.textContent += charArrDateLetter[currentIndexLetter];
-                    currentIndexLetter++;
-                }
-                else{
-                    // Khi gõ xong dòng 1, clear và gõ dòng 2
-                    clearInterval(intervalContent);
-                    setTimeout(function(){
-                        intervalContent2 = setInterval(function(){
-                            if(currentIndexLetter2 < charArrDateLetter2.length){
-                                text__letter2.textContent += charArrDateLetter2[currentIndexLetter2];
-                                currentIndexLetter2++;
+        }, 3500)
+        setTimeout(function () {
+            // Gõ dòng chúc đầu tiên: "Chúc bạn Ly..."
+            intervalContentNew = setInterval(function () {
+                if (currentIndexLetterNew < charArrDateLetterNew.length) {
+                    text__letter.textContent += charArrDateLetterNew[currentIndexLetterNew];
+                    currentIndexLetterNew++;
+                } else {
+                    clearInterval(intervalContentNew);
+                    setTimeout(function () {
+                        // Gõ dòng chúc thứ hai: "Sinh nhật vui vẻ..."
+                        intervalContent = setInterval(function () {
+                            if (currentIndexLetter < charArrDateLetter.length) {
+                                text__letter.textContent += charArrDateLetter[currentIndexLetter];
+                                currentIndexLetter++;
+                            } else {
+                                clearInterval(intervalContent);
+                                setTimeout(function () {
+                                    // Khi gõ xong dòng 1 và 2, gõ dòng ký tên
+                                    intervalContent2 = setInterval(function () {
+                                        if (currentIndexLetter2 < charArrDateLetter2.length) {
+                                            text__letter2.textContent += charArrDateLetter2[currentIndexLetter2];
+                                            currentIndexLetter2++;
+                                        } else {
+                                            clearInterval(intervalContent2);
+                                        }
+                                    }, 50)
+                                }, 500);
                             }
-                            else{
-                                clearInterval(intervalContent2);
-                            }
-                        },50)
-                    },500);
+                        }, 50)
+                    }, 500);
                 }
-            },50)
-        },6000)
+            }, 50)
+        }, 6000)
     })
 
-    $(".close").on("click", function(){
-        clearInterval(intervalContent);
-        clearInterval(intervalContent2);  // Dừng cả gõ ký tên
+    $(".close").on("click", function () {
+        clearInterval(intervalContentNew); // Dừng gõ dòng chúc mới
+        clearInterval(intervalContent);    // Dừng gõ dòng chúc thứ hai
+        clearInterval(intervalContent2);   // Dừng gõ dòng ký tên
 
         // Xoá nội dung
         document.querySelector(".title__letter").textContent = "";
@@ -254,6 +266,7 @@
         text__letter2.textContent = "";   // Xoá dòng ký tên
 
         // Reset biến đếm
+        currentIndexLetterNew = 0;
         currentIndexLetter = 0;
         currentIndexLetter2 = 0;
         currentIndexTitle = 0;
@@ -261,7 +274,7 @@
         document.querySelector("#heart__letter").classList.remove("animationOp");
         document.querySelector(".love__img").classList.remove("animationOp");
         document.querySelector("#mewmew").classList.remove("animationOp");
-        document.querySelectorAll(".heart").forEach((item)=>{
+        document.querySelectorAll(".heart").forEach((item) => {
             item.classList.remove("animation")
         })
         $(".box__letter").slideUp();
@@ -269,33 +282,34 @@
     })
 
     // mobile
-    function mobile(){
+    function mobile() {
         const app = {
-            timeout: function(txt, dom){
+            timeout: function (txt, dom) {
                 let currentIndex = 0;
                 let charArr = txt.split('')
-                intervalMobile = setInterval(function(){
-                    if(currentIndex < charArr.length){
+                intervalMobile = setInterval(function () {
+                    if (currentIndex < charArr.length) {
                         dom.textContent += charArr[currentIndex];
                         currentIndex++;
                     }
-                    else{
+                    else {
                         clearInterval(intervalMobile)
                     }
-                },200)
+                }, 200)
             }
         }
         return app
     }
     const fcMobile = mobile()
-    if(window.innerWidth < 768){
-        setTimeout(()=>{
+    if (window.innerWidth < 768) {
+        setTimeout(() => {
             fcMobile.timeout("12", document.querySelector(".day"))
-        },5000)
-        setTimeout(()=>{
+        }, 5000)
+        setTimeout(() => {
             fcMobile.timeout("1", document.querySelector(".month"))
-        },6000)
+        }, 6000)
     }
 </script>
+
 
 </html>
