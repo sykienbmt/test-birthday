@@ -46,7 +46,7 @@
                 </div>
                 <div class="btn">
                     <button id="btn__letter">
-                        Lời chúc của Kiên
+                        Bấm vào đây để xem thêm nà
                         <i class="fa-regular fa-envelope"></i>
                     </button>
                 </div>
@@ -152,10 +152,10 @@
 </body>
 <script>
     let datetxt = "12 - 01 - 2002";
-    let datatxtletterNew = "Chúc bạn Ly tuổi mới học giỏi, mau ăn, chóng lớn nha :v Just kidding"; // Dòng chúc mới
-    let datatxtletter = "Đùa chớ sinh nhật vui vẻ bên bạn bè và gia đình, sớm chinh phục những mục tiêu tiếp theo trong công việc nháaa!";
+    let datatxtletterNew = "Chúc bạn Ly tuổi mới học giỏi, mau ăn, chóng lớn nha :v"; // Dòng chúc mới
+    let datatxtletter = "Đùa chứ sinh nhật vui vẻ bên bạn bè và gia đình, sớm chinh phục những mục tiêu tiếp theo trong công việc nháaa!";
     let datatxtletter2 = "Kí tên: Kiên Nguyễn"; // Thêm dòng ký tên
-    let titleLetter = "Gửi bác sĩ Khánh Ly";
+    let titleLetter = "Gửi bs.Ly";
 
     let charArrDate = datetxt.split('');
     let charArrDateLetterNew = datatxtletterNew.split(''); // Mảng ký tự của dòng chúc mới
@@ -224,15 +224,17 @@
             // Gõ dòng chúc đầu tiên: "Chúc bạn Ly..."
             intervalContentNew = setInterval(function () {
                 if (currentIndexLetterNew < charArrDateLetterNew.length) {
-                    text__letter.textContent += charArrDateLetterNew[currentIndexLetterNew];
+                    text__letter.innerHTML += charArrDateLetterNew[currentIndexLetterNew]; // Sử dụng innerHTML
                     currentIndexLetterNew++;
                 } else {
                     clearInterval(intervalContentNew);
+                    // Thêm thẻ <br> để xuống dòng mới
+                    text__letter.innerHTML += "<br>"; // Xuống dòng mới sau khi hoàn thành dòng chúc đầu tiên
                     setTimeout(function () {
                         // Gõ dòng chúc thứ hai: "Sinh nhật vui vẻ..."
                         intervalContent = setInterval(function () {
                             if (currentIndexLetter < charArrDateLetter.length) {
-                                text__letter.textContent += charArrDateLetter[currentIndexLetter];
+                                text__letter.innerHTML += charArrDateLetter[currentIndexLetter]; // Sử dụng innerHTML
                                 currentIndexLetter++;
                             } else {
                                 clearInterval(intervalContent);
@@ -262,7 +264,7 @@
 
         // Xoá nội dung
         document.querySelector(".title__letter").textContent = "";
-        text__letter.textContent = "";
+        text__letter.innerHTML = ""; // Xoá cả dòng chúc mới và dòng chúc thứ hai
         text__letter2.textContent = "";   // Xoá dòng ký tên
 
         // Reset biến đếm
@@ -310,6 +312,5 @@
         }, 6000)
     }
 </script>
-
 
 </html>
